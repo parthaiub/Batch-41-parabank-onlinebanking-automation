@@ -1,0 +1,92 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.para-bank</groupId>
+  <artifactId>parabank-onlinebanking-automation</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+
+  <properties>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <selenium.version>4.25.0</selenium.version>
+    <cucumber.version>4.7.1</cucumber.version>
+    <reporting.version>5.0.0</reporting.version>
+    <testng.version>7.4.0</testng.version>
+  </properties>
+
+  <dependencies>
+    <!-- Selenium Dependency -->
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-java</artifactId>
+      <version>${selenium.version}</version>
+    </dependency>
+    <!-- Cucumber TestNG Dependency -->
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-testng</artifactId>
+      <version>${cucumber.version}</version>
+    </dependency>
+    <!-- Maven Cucumber Reporting Dependency -->
+    <dependency>
+      <groupId>net.masterthought</groupId>
+      <artifactId>cucumber-reporting</artifactId>
+      <version>${reporting.version}</version>
+    </dependency>
+    <!-- TestNG Dependency -->
+    <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>${testng.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <!-- Maven Compiler Plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.11.0</version>
+        <configuration>
+          <source>${maven.compiler.source}</source>
+          <target>${maven.compiler.target}</target>
+        </configuration>
+      </plugin>
+
+      <!-- Maven Surefire Plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.0.0-M7</version>
+        <configuration>
+          <suiteXmlFiles>
+            <suiteXmlFile>testng.xml</suiteXmlFile>
+          </suiteXmlFiles>
+        </configuration>
+      </plugin>
+
+      <!-- Maven Cucumber Reporting Plugin -->
+      <plugin>
+        <groupId>net.masterthought</groupId>
+        <artifactId>maven-cucumber-reporting</artifactId>
+        <version>${reporting.version}</version>
+        <executions>
+          <execution>
+            <id>execution</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <projectName>Parabank Online Banking Automation</projectName>
+              <outputDirectory>${project.build.directory}/cucumber-report-html</outputDirectory>
+              <jsonFiles>
+                <param>${project.build.directory}/cucumber.json</param>
+              </jsonFiles>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
