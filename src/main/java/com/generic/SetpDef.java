@@ -5,7 +5,12 @@ import java.time.Duration;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
+
+import com.util.BaseConfig;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -16,40 +21,50 @@ public class SetpDef {
 	WebDriver driver;//Globally initiate  
 	PageFactoryParaBank pf;//Globally initiate 
 	SoftAssert sa;//Globally initiate
+	BaseConfig config;
 	
 	@Given("open browser")
 
 	public void open_browser() {
 	driver = new ChromeDriver();
 	driver.manage().window().maximize();
-	driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+
 	   
 	}
 
 	@Given("go to parabank application login page")
-	public void go_to_parabank_application_login_page() {
+	public void go_to_parabank_application_login_page() throws Exception {
+	//come form BaseConfig
+	config=new BaseConfig();
+	config.getConfig("URL");
 	driver.navigate().to("https://parabank.parasoft.com/parabank/index.htm");
-	
+	driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));//Implicit wiat =HTML Load
+	//driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(3));//pageload  =page  Load
 
 	}
 
 	@When("put valid username")
-	public void put_valid_username() {
+	public void put_valid_username() throws Exception {
 		//How to write selenium webelement locator
 		//driver.findElement(By.xpath("//*[@name='username']")).sendKeys("partha");
 		
 		pf = new PageFactoryParaBank(driver);
-		pf.getUsername().sendKeys("Parthaiub");
+		
+		//Explicit wait when add wait in particular element 
+		WebDriverWait wait =new  WebDriverWait(driver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.elementToBeClickable(pf.getUsername()));
+		
+		pf.getUsername().sendKeys(config.getConfig("VALID_USERNAME"));
 	}
 
 	@When("put valid password")
-	public void put_valid_password() {
+	public void put_valid_password() throws Exception {
 		pf = new PageFactoryParaBank(driver);
-		pf.getPassword().sendKeys("Partha@12345");
+		pf.getPassword().sendKeys(config.getConfig("VALID_PASSWORD"));
 	}
 
 	@When("click login button")
-	public void click_login_button() {
+	public void click_login_button() { 
 		pf = new PageFactoryParaBank(driver);
 		pf.getLoginButton().click();
 	}
@@ -69,10 +84,10 @@ public class SetpDef {
 	}
 
 	@When("put invalid username")
-	public void put_invalid_username() {
+	public void put_invalid_username() throws Exception {
 		sa= new SoftAssert();
 		pf = new PageFactoryParaBank(driver);
-		pf.getUsername().sendKeys("artha");
+		pf.getUsername().sendKeys(config.getConfig("INVALID_USERNAME"));
 	    
 	}
 
@@ -86,9 +101,9 @@ public class SetpDef {
 	}
 
 	@When("put invalid password")
-	public void put_invalid_password() {
+	public void put_invalid_password() throws Exception {
 		pf = new PageFactoryParaBank(driver);
-		pf.getPassword().sendKeys("2345");
+		pf.getPassword().sendKeys(config.getConfig("INVALID_PASSWORD"));
 	}
 
 	@Then("login should fail and dsiplay username error")
@@ -135,6 +150,40 @@ public class SetpDef {
 		sa.assertAll();
 		driver.quit();
 	}
+/*
+//validpasword
+	
+	@When("put valid username {String}")
+	public void put_valid_username_Parthaiub(String username) {
+	   
+		pf = new PageFactoryParaBank(driver);
+		WebDriverWait wait =new  WebDriverWait(driver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.elementToBeClickable(pf.getUsername()));
+		pf.getUsername().sendKeys(username);
+	}
 
+	@When("put valid password {int}")
+	public void put_valid_password_Partha(String password) {
+		pf = new PageFactoryParaBank(driver);
+		pf.getPassword().sendKeys(password);
+	   
+	}
+*/
+	//not working
+	@When("put valid username Parthaiub {String}")
+	public void put_valid_username_Parthaiub(String username) {
+		pf = new PageFactoryParaBank(driver);
+		WebDriverWait wait =new  WebDriverWait(driver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.elementToBeClickable(pf.getUsername()));
+		pf.getUsername().sendKeys(username);
+	}
 
+	@When("put valid password Partha@{int}")
+	public void put_valid_password_Partha(CharSequence[] password) {
+	
+		pf = new PageFactoryParaBank(driver);
+		pf.getPassword().sendKeys(password);
+	}
+
+	
 }
