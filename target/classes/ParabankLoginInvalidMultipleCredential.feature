@@ -19,9 +19,9 @@ Feature: login funcation for parabank
 
     Examples: 
       | Username | Password  | 
-      | arthaiub | 2345      | 
+      | arthaiub |2345       | 
       | artha    |rtha@12345 | 
-      | artha    |    2345   | 
+      | artha    |2345       | 
       
       
       

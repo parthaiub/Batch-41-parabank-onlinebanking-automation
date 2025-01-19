@@ -8,9 +8,9 @@ import io.cucumber.testng.CucumberOptions;
 
 @CucumberOptions(
     plugin = {"json:target/cucumber.json"},
-    features = {//"/Users/parthadebnath/eclipse-Batch-41/parabank-onlinebanking-automation/src/main/resources/Login.feature",
+    features = {"/Users/parthadebnath/eclipse-Batch-41/parabank-onlinebanking-automation/src/main/resources/Login.feature"},
     		//"/Users/parthadebnath/eclipse-Batch-41/parabank-onlinebanking-automation/src/main/resources/ParabankLoginInvalidMultipleCredential.feature",
-    		"/Users/parthadebnath/eclipse-Batch-41/parabank-onlinebanking-automation/src/main/resources/ParabankLoginValidMultipleCredential.Feature"},
+    		//"/Users/parthadebnath/eclipse-Batch-41/parabank-onlinebanking-automation/src/main/resources/ParabankLoginValidMultipleCredential.Feature"},
     //{"src/main/resources/Login.feature"}, // Ensure the path is correct
     glue = {"com.generic"}, // Ensure step definitions are in the 'com.generic' package
     tags = "@Smoke and @Positive", // Correct tag syntax

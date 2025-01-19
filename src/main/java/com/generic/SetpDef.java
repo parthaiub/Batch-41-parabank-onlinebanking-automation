@@ -150,6 +150,7 @@ public class SetpDef {
 		sa.assertAll();
 		driver.quit();
 	}
+	
 /*
 //validpasword
 	
@@ -168,7 +169,7 @@ public class SetpDef {
 		pf.getPassword().sendKeys(password);
 	   
 	}
-*/
+
 	//not working
 	@When("put valid username Parthaiub {String}")
 	public void put_valid_username_Parthaiub(String username) {
@@ -184,6 +185,6 @@ public class SetpDef {
 		pf = new PageFactoryParaBank(driver);
 		pf.getPassword().sendKeys(password);
 	}
-
+*/
 	
 }
